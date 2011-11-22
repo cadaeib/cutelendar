@@ -1,0 +1,164 @@
+head	1.1;
+access;
+symbols;
+locks
+	amyzhou:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2011.08.17.19.14.17;	author amyzhou;	state Exp;
+branches;
+next	;
+
+
+desc
+@about to add in php saving.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+#duetime {
+	position:absolute;
+	top:50px;
+	width: 100px;
+	height:25px;
+	text-align:center;
+	font-size:24px;
+	font-family: sans-serif;
+}
+
+#timetextbox {
+	position: absolute;
+	top:50px;
+	width:100px;
+	height:30px;
+	text-align:center;
+	font-size:24px;
+	font-family:sans-serif;
+}
+
+#duedate {
+	position:relative;
+	font-family:sans-serif;
+	font-size:36px;
+	text-align:center;
+	color:#FFF;
+}
+
+#rightpanel {
+	position:absolute;
+	left:500px;
+	top:30px;	
+	height:500px;
+	width:500px;
+	background-color:#359;
+}
+
+#youvegot {
+	position:absolute;
+	right:50px;
+	top:10px;
+	font-size:20px;
+	font-family:"Agency FB";
+}
+
+#todothis {
+	position:absolute;
+	right:50px;
+	top:300px;
+	font-size:20px;
+	font-family:"Agency FB";
+}
+#timedisplay {
+	position: absolute;
+	width:60px;
+	top:40px;
+	right:70px;
+	background-color: #DDF;
+	font-size:40px;
+	font-family:"Agency FB";
+	font-weight:bold;
+	text-align:right;
+}
+
+#timelabels {
+	position: absolute;
+	width:50px;
+	top:40px;
+	right:20px;
+	font-size:20px;
+	font-family:"Agency FB";
+	text-align:left;	
+}
+
+.numberblock {
+	position:relative;
+	height:50px;
+	padding:15px;
+}
+
+#weekdisplay {
+	background-color:#E3D254;
+}
+
+#daydisplay {
+	background-color:#E09451;
+}
+
+#hourdisplay {
+	background-color:#E35454;
+}
+
+#text {
+	position: absolute;
+	text-align: center;
+	height: 500px;
+	top: 50px;
+	left: 100px;
+	margin: 0 auto;
+	font-family: sans-serif;
+	font-weight: bold;
+	width: 300px;
+	font-size: 24px;
+	color: #FFF;
+}
+
+
+#is {
+	position:relative;
+	font-size: 16px;
+	text-align: center;
+	color: #DDD;
+	text-decoration: overline underline;
+
+}
+
+#buttonlist {
+	position:absolute;
+	top: 300px;
+	left: 200px;
+}
+
+.button {
+	padding:10px;
+	float:left;
+}
+
+#timeuntil {
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 24px;
+	color: #333;
+}
+
+.hidden {
+	visibility:hidden;
+}
+@

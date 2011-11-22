@@ -1,0 +1,61 @@
+head	1.1;
+access;
+symbols;
+locks
+	amyzhou:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2011.08.17.19.14.33;	author amyzhou;	state Exp;
+branches;
+next	;
+
+
+desc
+@about to add in php saving.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@<html>
+<head>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="script.js" type="text/javascript"></script>
+<link rel="stylesheet" href="./style.css" type="text/css" media="screen"/>
+<title>Cutelendar</title>
+</head>
+<body>
+<canvas id="canvas" height="600" width="300"></canvas>
+<a href="#" id="addnew">add another item</a>
+<a href="#" id="savetime">save time</a>
+<div id="rightpanel">
+	<div id="youvegot">you've got</div>
+	<div id="timedisplay">
+		<div class="numberblock" id="weekdisplay"></div>
+		<div class="numberblock" id="daydisplay"></div>
+		<div class="numberblock" id="hourdisplay"></div>
+	</div>
+	<div id="timelabels">
+		<div class="numberblock">weeks</div>
+		<div class="numberblock">days</div>
+		<div class="numberblock">hours</div>
+	</div>
+	<div id="todothis">to do this.</div>
+	<div id="duetime"></div>
+	<textarea id="timetextbox" cols="8" rows="1">
+	</textarea><br>
+	<div id="text"></div>
+	<div id="duedate"></div>
+	<div id="buttonlist">
+	<img src="shrink.png" class="button" id="shrink" alt="shrink this item">
+	<img src="grow.png" class="button" id="grow" alt="grow this item">
+	</div>
+</div>
+<div id="debug">DEBUG TEXT</div>
+</body>
+</html>@

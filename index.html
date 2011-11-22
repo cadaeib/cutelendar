@@ -1,0 +1,92 @@
+<html>
+<head>
+<script src="jshash-2.2/md5.js" type="text/javascript"></script>
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.cookie.js" type="text/javascript"></script>"
+<script src="script.js" type="text/javascript"></script>
+<link href='http://fonts.googleapis.com/css?family=Short+Stack' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="./style.css" type="text/css" media="screen"/>
+<title>Cutelendar</title>
+</head>
+<body>
+	
+	
+<canvas id="canvas"></canvas>
+<a href="javascript:void(0)" class="textbutton" id="addnew">add another item</a>
+<a href="javascript:void(0)" class="textbutton" id="remove">remove current item</a>
+<a href="javascript:void(0)" class="textbutton" id="zoomin">zoom in</a>
+<a href="javascript:void(0)" class="textbutton" id="zoomout">zoom out</a>
+
+<div id="savepanel">
+	Calendar name: <textarea id="calnametextbox">
+	</textarea><br><br>
+	Password: <input type=password id="password">
+	<div id="calname"></div>
+	<div id="lastsaved"></div> <br>
+<a href="#" id="savecal">save calendar</a>
+<a href="#" id="loadcal">load calendar</a>
+	
+</div>
+
+<div id="rightpanel">
+	
+<div id="repeatsection">
+		
+		<div id="repeatday">
+		<img src="repeatday.png" class="repeatbutton" id="rday" alt="repeat in one day">
+		<img src="repeatdayselected.png" class="hidden repeatbutton" id="rsday" alt="repeat in one day">
+		</div>
+		<div id="repeatweek">
+		<img src="repeatweek.png" class = "repeatbutton" id="rweek" alt="repeat in one week">
+		<img src="repeatweekselected.png" class="hidden repeatbutton" id="rsweek" alt="repeat in one week">
+		</div>
+<!--		<input type="radio" name="repeat" value="never" checked/> never <br />
+		<input type="radio" name="repeat" value="week"/> in a week <br />
+		<input type="radio" name="repeat" value="day"/> in a day <br /> -->
+	</div>
+	<div id="youdid" class="blocktext">you did this</div>
+	<div id="youvegot" class="blocktext">you've got</div>
+	<div id="timedisplay">
+		<div class="numberblock" id="weekdisplay"></div>
+		<div class="numberblock" id="daydisplay"></div>
+		<div class="numberblock" id="hourdisplay"></div>
+	</div>
+	<div id="timelabels">
+		<div class="numberblock">weeks</div>
+		<div class="numberblock">days</div>
+		<div class="numberblock">hours</div>
+	</div>
+	<div id="todothis" class="blocktext">to do this.</div>
+	<div id="beforedue" class="blocktext">before it was due!</div>
+	<div id="duetime"></div>
+	<textarea id="timetextbox" cols="8" rows="1">
+	</textarea><br>
+	
+	<div id="colors">
+		<div id="bluebutton" class="colorbutton"></div>
+		<div id="redbutton" class="colorbutton"></div>
+		<div id="greybutton" class="colorbutton"></div>
+	</div>
+	<div id="text"></div>
+	<input id="textinput" type="text">
+	<div id="duedate"></div>
+	<div id="buttonlist">
+	<img src="shrink.png" class="button" id="shrink" alt="shrink this item">
+	<img src="grow.png" class="button" id="grow" alt="grow this item">
+	</div>
+		<div id="awesome">
+	<a href="#" id="progress">I worked on this!</a> <br> <br>
+	<a href="#" id="finish">I'm DONE!</a>
+	</div>
+	<div id="yourockwoohoo" class="angelic">You rock, <br> woohoo!</div>
+
+</div>
+<div id="debug">DEBUG TEXT</div>
+	<div id="popup">This is the Cutelendar! <br> <br> 
+		Load a calendar? <input type="text" id="loadcalname" value="Type a name..."> <input type="button" id="loadbutton" value="go!">
+	<br><br>
+		 Or create one? <input type="text" id="createcalname" value="Type a name..."> <input type="button" id="createbutton" value="go!">
+	</div>
+
+</body>
+</html>

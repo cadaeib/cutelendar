@@ -1,0 +1,326 @@
+#popup {
+	position:absolute;
+	top:100px;
+	left:300px;
+	right:300px;
+	bottom:100px;
+	background-color:#FFF;
+	border-style:solid;
+	border-color:#888;
+	font-family:sans-serif;
+	font-size:18pt;
+	text-align:center;
+	padding:50px;
+}
+
+#canvas {
+	position:absolute;
+	top:50px;
+	left:20px;
+	width:300px;
+	bottom:0px;
+	border-style:solid;
+}
+
+.textbutton {
+	font-size:9pt;
+	padding:3px;
+	background-color:#338;
+	color:#FFF;
+	border-radius:5px;
+	border-style:solid;
+	border-color:#225;
+	font-family:sans-serif;
+}
+
+.textbutton:hover {
+	background-color:#66A;
+}
+
+.textbuttonselected {
+	background-color:#224;
+}
+
+.textbutton:link { text-decoration:none;}
+
+#duetime {
+	position:absolute;
+	top:50px;
+	width: 100px;
+	height:25px;
+	text-align:center;
+	font-size:24px;
+	font-family: sans-serif;
+}
+
+#timetextbox {
+	position: absolute;
+	top:50px;
+	width:100px;
+	height:30px;
+	text-align:center;
+	font-size:24px;
+	font-family:sans-serif;
+}
+
+#duedate {
+	position:relative;
+	font-family:'Agency FB';
+	font-size:36px;
+	text-align:center;
+	color:#FFF;
+}
+
+#rightpanel {
+	position:absolute;
+	left:500px;
+	top:30px;	
+	height:500px;
+	width:500px;
+	background-color:#359;
+}
+
+
+.blocktext {
+	position:inline;
+	font-size:20px;
+	font-family:"Agency FB";	
+	width:100px;
+}
+
+
+#youdid {
+	position:absolute;
+	right:50px;
+	top:10px;
+	
+}
+#beforedue {
+	position:absolute;
+	right:50px;
+	top:320px;
+}
+
+#youvegot {
+	position:absolute;
+	right:50px;
+	top:10px;
+}
+
+#todothis {
+	position:absolute;
+	right:50px;
+	top:320px;
+}
+#timedisplay {
+	position: absolute;
+	width:60px;
+	top:70px;
+	right:70px;
+	background-color: #DDF;
+	font-size:40px;
+	font-family:"Agency FB";
+	font-weight:bold;
+	text-align:right;
+}
+
+#timelabels {
+	position: absolute;
+	width:50px;
+	top:70px;
+	right:20px;
+	font-size:20px;
+	font-family:"Agency FB";
+	text-align:left;	
+}
+
+.numberblock {
+	position:relative;
+	height:50px;
+	padding:15px;
+}
+
+#weekdisplay {
+	background-color:#E3D254;
+}
+
+#daydisplay {
+	background-color:#E09451;
+}
+
+#hourdisplay {
+	background-color:#E35454;
+}
+
+#text {
+	text-align: center;
+//	height: 500px;
+//	top: 100px;
+//	left: 100px;
+//	margin: 0 auto;
+	font-weight: bold;
+	width: 300px;
+	padding-left:100px;
+	font-size: 24px;
+	color: #FFF;
+	font-family: "Agency FB";
+}
+
+
+#is {
+	position:relative;
+	font-size: 16px;
+	text-align: center;
+	color: #DDD;
+	text-decoration: overline underline;
+
+}
+
+#buttonlist {
+	position:absolute;
+	top: 300px;
+	left: 200px;
+}
+
+.button {
+	padding:10px;
+	float:left;
+}
+
+#timeuntil {
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 24px;
+	color: #333;
+}
+
+.hidden {
+	visibility:hidden;
+}
+
+#colors {
+	height:20px;
+	position:absolute;
+	top: 100px;
+	left: 50px;
+}
+
+.colorbutton {
+	float:left;
+	height:20px;
+	width:20px;
+	
+}
+
+#bluebutton {
+	background-color:#28C;
+}
+
+#greybutton {
+	background-color:#777;
+}
+
+#redbutton {
+	background-color:#B00;
+}
+
+#lastsaved {
+	position:absolute;
+	color:#777;
+	font-family:sans-serif;
+	font-size:12pt;
+	bottom:2px;
+}
+
+#calnametextbox {
+	position:absolute;
+	left:20px;
+	top:35px;
+	background-color:#999;
+	border:none;
+	height:18px;
+}
+
+#calname {
+	position:absolute;
+	left:20px;
+	top:35px;
+	height:18px;
+}
+
+
+#password {
+	height:18px;
+}
+
+#savepanel {
+	font-family:sans-serif;
+	position:absolute;
+	bottom:20px;
+	height:100px;
+	width:300px;
+	padding:15px;
+	background-color:#999;
+}
+
+#savecal {
+	bottom: 20px;
+}
+
+#loadcal {
+	bottom: 20px;	
+}
+
+#repeatsection {
+	position:relative;
+	top:300px;
+}
+
+#repeatday {
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+
+#repeatweek {
+	position:absolute;
+	top:0px;
+	left:30px;
+}
+
+.repeatbutton {
+	position:absolute;
+	top:0px;
+	left:0px;
+}
+
+#awesome {
+	top:150px;
+	left:30px;
+	font-family: 'Agency FB';
+	font-size: 30px;
+	color:#FFF;
+	text-align:center;
+}
+
+#awesome A:link {color:#FFF; text-decoration:none}
+#awesome A:visited {color:#FFF; text-decoration:none} 
+
+.angelic {
+text-shadow:#FF9 0px 0px 8px;	
+}
+
+.demonic {
+	text-shadow:#F00 0px 0px 8px;
+}
+
+#yourockwoohoo {
+	position:absolute;
+	top:150px;
+	left:30px;
+	font-family: 'Agency FB';
+	color:#FFF;
+	font-weight:bold;
+	font-size:60px;
+}

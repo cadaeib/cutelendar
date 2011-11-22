@@ -1,0 +1,69 @@
+
+getStuff.php 
+
+TAKES:
+
+json object consisting of 
+	calname: calname 
+	hash: pass hash
+	
+
+RETURNS:
+
+json object consisting of
+	list: list of cats
+	settings: list of settings
+	writable: boolean writable
+
+IS CALLED WHEN: 
+
+"load" is clicked, calname isn't null
+
+------------------
+
+makeNew.php 
+
+TAKES:
+
+json object consisting of
+	calname: NEW calname
+	list: list of cats
+	settings: list of settings
+	hash: hash of NEW password
+
+RETURNS:
+success/error message
+
+IS CALLED WHEN: 
+"save" is clicked right after changing calname
+
+-----------------
+
+storeStuff.php
+
+TAKES:
+
+json object consisting of
+	calname: calendar name
+	list: list of cats
+	settings: list of settings
+	hash: hash of password
+
+RETURNS:
+error/success message
+
+IS CALLED WHEN:
+"save" is clicked with unchanged calname
+
+-----------------
+
+checkPass from checkPass.php
+
+TAKES: 
+
+
+RETURNS: 
+
+IS CALLED WHEN: 
+
+storeStuff.php and getStuff.php need to verify a password

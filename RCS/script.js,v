@@ -1,0 +1,506 @@
+head	1.1;
+access;
+symbols;
+locks
+	amyzhou:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2011.08.17.19.13.59;	author amyzhou;	state Exp;
+branches;
+next	;
+
+
+desc
+@about to add in php saving.
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@
+/******************
+ * features I want:
+ * - keep track of stats ie
+ * 	 - furthest completed ahead of time
+ *   - biggest task completed
+ *   - most tasks completed in a day
+ *   - maybe even leaderboard with yourself?
+ * - show arrows when scrolling
+ * x display weekend dates in -red- blue
+ * - allow dragging the background to scroll
+ * - clean up that panel!
+ * - make graphics for "add new" button
+ * - add colour-change buttons
+ */
+
+$(document).ready(function () {
+	var CL = {
+		MAXR: 60,
+		MINR: 10,
+		HEIGHT: 600,
+		WIDTH: 300,
+		NOW: 400, // height of right now
+		SNAPMARGIN: 5,
+		SCROLL: 15,
+		cats: [],
+		currCat: null,
+		originalY: 0, // original y-pos of what we started dragging
+		xPosInCurrCat: 0,
+		yPosInCurrCat: 0, // where we are wrt center of draggee
+		grabbedY: 0, // y-coordinate of where we grabbed to drag
+		weeksLeft: 0,
+		daysLeft: 0,
+		hoursLeft: 0,
+		mousedown: false,
+		debug: (function (s) {
+			$('#debug').text(s);
+		}),
+		scrollSpeed: 0,
+		zoomSpeed: 0,
+		scale: 1,
+		growing: false,
+		adding: false,
+		typingInTextbox: false
+	};
+		
+	CL.offLeft = $("#canvas").offset().left;
+	CL.offTop = $("#canvas").offset().top;
+
+	CL.buttons = [];
+	
+	
+CL.buttons = function () {
+};
+
+CL.Cat = function () {
+	this.text = "";
+	this.color = "#000";
+	this.r = 20;
+	this.startingr = 20;
+	this.x = CL.WIDTH/2;
+	this.y = CL.NOW;
+	
+};
+
+CL.Cat.prototype.contains = function (ev) {
+	return (this.distSqTo(ev) < (this.r * this.r));
+}
+
+
+CL.Cat.prototype.distSqTo = function (ev) {
+	var dx = this.x - CL.x(ev);
+	var dy = this.y - CL.y(ev);
+	return ((dx * dx) + (dy * dy));
+}
+
+CL.Cat.prototype.getDate = function () { 
+	return (CL.yToDate(this.y));
+};
+
+CL.Cat.prototype.setColor = function (newcolor) {
+	this.color = newcolor;
+};
+
+CL.Cat.prototype.draw = function () {
+	var t;
+	CL.ctx.fillStyle = this.color;
+	CL.window.drawCircle(this);
+	if (CL.currCat == this) {
+		CL.ctx.strokeStyle = "#F00";
+		CL.window.drawEmptyCircle(this);
+	};
+	CL.ctx.fillStyle = "#FFF";
+	t = (this.r/5 < this.text.length) ? 
+			this.text.substring(0, this.r/5) + "..." : this.text;
+	CL.ctx.fillText(t, this.x, this.y);
+}; // circles for now
+
+
+CL.setCurrCat = function (c) {
+	CL.currCat = c;
+	$('#rightpanel').removeClass("hidden");
+};
+
+CL.clearCurrCat = function () {
+	CL.currCat = null;
+	CL.debug("clearing" + Math.random());
+	$('#rightpanel').addClass("hidden");
+	$('#timetextbox').addClass("hidden");
+};
+
+CL.x = function (ev) { // account for offset -- see http://api.jquery.com/event.pageX/
+	return (ev.pageX - CL.offLeft);
+};
+
+CL.y = function (ev) { // account for offset -- see http://api.jquery.com/event.pageX/
+	return (ev.pageY - CL.offTop);
+};
+
+CL.timeUntil = function (d) {
+	var dt = d.getTime() - Date.now();
+	return dt;
+};
+
+CL.snapDate = function (d) { // TODO: this.
+	if (d.getMinutes < 5) {
+		
+	};
+	if (d.getMinutes > 55) {
+		
+	};
+	
+	if (CL.timeUntil(d) > 0);
+	// snap to nice times
+};
+
+CL.drawLines = function () {
+	var date;
+	CL.ctx.save();
+	date = new Date(Date.now());
+	CL.ctx.strokeStyle = "#F88"; // I don't like repeating this code
+	y = CL.dateToY(date); // TODO maybe make a "draw line at date" fn
+	CL.ctx.beginPath();
+	CL.ctx.moveTo(0, y);
+	CL.ctx.lineTo(CL.WIDTH, y);
+	CL.ctx.lineWidth = 2;
+	CL.ctx.stroke();
+	
+	date = new Date(CL.yToDate(CL.HEIGHT));
+	date.setHours(0); // this date is midnight, the earliest day visible
+	date.setMinutes(0);
+	date.setSeconds(0);
+	CL.ctx.fillStyle = "#000";
+	CL.ctx.textAlign = "left";
+	CL.ctx.lineWidth = 1;
+	while (CL.dateToY(date) > 0) {
+		CL.ctx.strokeStyle = "#DDD";
+		date = new Date(date.getTime() + 86400000); // 86400 000 is a day in ms
+		y = CL.dateToY(date);
+		CL.ctx.beginPath();
+		CL.ctx.moveTo(0, y);
+		CL.ctx.lineTo(CL.WIDTH, y);
+		if ((date.getDay() === 1) || (date.getDay() === 0)) {
+			CL.ctx.strokeStyle = "#88F";
+		}
+		CL.ctx.stroke();
+		CL.ctx.fillText(CL.dateToString(CL.yToDate(y)), 10, y - 5);
+	}
+	CL.ctx.restore();
+};
+
+CL.months = ["jan", "feb", "mar", "apr", "may", "june", "july", "aug", "sep", "oct", "nov", "dec"];
+CL.days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
+CL.zoomIn = function () {
+	
+};
+
+CL.zoomOut = function () {
+	
+};
+
+
+CL.yToDate = function (y) {
+	return new Date((CL.NOW - y) * 2000000 + Date.now());	
+};
+
+CL.dateToY = function (d) {
+	return (CL.NOW - (d.getTime() - Date.now())/2000000);
+};
+
+CL.dateToString = function (d) {
+	return (CL.days[d.getDay()] + " " + CL.months[d.getMonth()] + " " + d.getDate());
+};
+
+CL.timeToString = function (d) {
+	var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+	return (d.getHours() + ":" + minutes);
+};
+
+CL.timeUntilToString = function (ms) {
+	var output = "", n, past = false;
+	CL.weeksLeft = 0; // reset everything
+	CL.daysLeft = 0;
+	CL.hoursLeft = 0; 
+	if (Math.abs(ms) < 60000) return "right now!";
+	if (ms > 0) {
+		output = "in ";
+	} else {
+		past = true;
+		ms *= -1;
+	}
+	if (ms > 604800000000) { // this can probably be simplified :-/
+		n = Math.floor(ms / 604800000000); // weeks!
+		ms -= 604800000000 * n;
+		CL.weeksLeft = n;
+		output += n;
+		output += (n === 1) ? " week, " : " weeks, ";
+	}
+	if (ms > 86400000) { // days!
+		n = Math.floor(ms / 86400000);
+		ms -= 86400000 * n;
+		CL.daysLeft = n;
+		output += n;
+		output += (n === 1) ? " day, " : " days, ";
+	}
+	if (ms > 3600000) { // hours!
+		n = Math.floor(ms / 3600000);
+		ms -= 3600000 * n;
+		CL.hoursLeft = n;
+		output += n;
+		output += (n === 1) ? " hour, " : " hours, "	;
+	}
+	
+	if (ms > 60000) { // minutes!
+		n = Math.floor(ms / 60000);
+		ms -= 60000 * n;
+		output += n;
+		output += (n === 1) ? " minute, " : " minutes, "	;
+	}
+	output = output.substring(0, output.length - 2); // truncate last comma
+	if (past) {
+		output += " ago";
+	}
+	return output;
+};
+
+CL.window = {};
+
+
+CL.window.clear = function () {
+	CL.ctx.clearRect(0, 0, CL.WIDTH, CL.HEIGHT);
+};
+
+CL.window.drawCircle = function (o) {
+	CL.ctx.beginPath();
+	CL.ctx.arc(o.x, o.y, o.r, 0, 360, false);
+	CL.ctx.fill();
+};
+
+CL.window.drawEmptyCircle = function (o) {
+	CL.ctx.beginPath();
+	CL.ctx.arc(o.x, o.y, o.r, 0, 360, false);
+	CL.ctx.stroke();
+};
+
+CL.findClosest = function (ev) {
+	var i, distsq = 999999999, thisdist, nearest;
+	CL.clearCurrCat();
+	for (i = 0; i < CL.cats.length; i++) {
+		thisdist = CL.cats[i].distSqTo(ev);
+		if (thisdist < distsq) {
+			distsq = thisdist; 
+			nearest = CL.cats[i];
+		}
+	}
+	CL.setCurrCat(nearest);
+	return CL.currCat;
+};
+
+CL.drawAll = function () {
+	var i;
+	CL.window.clear();
+	CL.drawLines();
+	for (i = 0; i < CL.cats.length; i++) {
+		CL.cats[i].draw();
+	}
+	if (CL.currCat !== null) {
+		CL.currCat.draw(); // make sure current is on top
+	}
+}
+
+CL.init = function () {
+	CL.ctx = document.getElementById('canvas').getContext('2d');
+	CL.ctx.textAlign = "center";
+	CL.ctx.textBaseline = "middle";
+	CL.ctx.lineWidth = "3";
+	CL.cats = new Array((new CL.Cat()), (new CL.Cat()));
+	CL.clearCurrCat();
+	CL.update();
+};
+
+CL.handleMouseMove = function (ev) {
+	var dy, i;
+	if (CL.mousedown) {
+		if (CL.currCat) {
+			CL.currCat.x = CL.x(ev) - CL.xPosInCurrCat;
+			CL.currCat.y = CL.y(ev) - CL.yPosInCurrCat;
+			if (Math.abs(CL.currCat.y - CL.originalY) < CL.SNAPMARGIN) {
+				CL.currCat.y = CL.originalY;
+			}
+			CL.updatePanel();
+		} else {
+			// scroll amount dragged
+			dy = CL.grabbedY - CL.y(ev);
+			CL.grabbedY = CL.y(ev);
+			CL.NOW -= dy;
+			for (i = 0; i < CL.cats.length; i++) {
+				CL.cats[i].y -= dy;
+			}
+		}
+	}
+	if (CL.y(ev) < CL.SCROLL) {
+		CL.scrollSpeed = 1;
+	} else {
+		if (CL.y(ev) > CL.HEIGHT - CL.SCROLL) {
+			CL.scrollSpeed = -1;
+		} else {
+			CL.scrollSpeed = 0;
+		}
+	}
+	
+};
+
+CL.handleMouseUp = function (ev) {
+	CL.mousedown = false;
+	CL.growing = false;
+};
+
+CL.handleMouseDown = function (ev) {
+	CL.grabbedY = CL.y(ev);
+	CL.mousedown = true;
+	CL.findClosest(ev);
+	if (!(CL.currCat.contains(ev))) {
+		CL.clearCurrCat();
+		if (CL.adding) {
+			CL.setCurrCat(new CL.Cat());
+			CL.cats[CL.cats.length] = CL.currCat;
+			CL.growing = true;
+			CL.currCat.x = CL.x(ev);
+			CL.currCat.y = CL.y(ev);
+			CL.currCat.r = 10;
+			CL.adding = false;
+		}
+	} else {
+		CL.xPosInCurrCat = CL.x(ev) - CL.currCat.x;
+		CL.yPosInCurrCat = CL.y(ev) - CL.currCat.y;
+		CL.originalY = CL.currCat.y;
+	}
+	CL.updatePanel();
+};
+
+CL.update = function () {
+	CL.drawAll();
+	if (CL.mousedown && CL.growing && (CL.currCat !== null)) {
+		if (CL.currCat.r < CL.MAXR) {
+			CL.currCat.r += 0.5;
+		}
+	}
+	if (CL.scrollSpeed !== 0) {
+		CL.NOW+= CL.scrollSpeed;
+		for (var i = 0; i < CL.cats.length; i++) {
+			CL.cats[i].y += CL.scrollSpeed;
+		}
+	}
+	return setTimeout(CL.update, 10);
+}
+
+CL.updatePanel = function () {
+	var d;
+	if (CL.currCat !== null) {
+		d = CL.currCat.getDate();
+		$('#duedate').text(CL.dateToString(d));
+		$('#duetime').text(CL.timeToString(d));
+		//$('#timeuntil').text(CL.timeUntilToString(d.getTime() - Date.now()));
+		CL.timeUntilToString(d.getTime() - Date.now());
+		$('#weekdisplay').text(CL.weeksLeft);
+		$('#daydisplay').text(CL.daysLeft);
+		$('#hourdisplay').text(CL.hoursLeft);
+		$('#text').text(CL.currCat.text);
+	}
+}
+
+CL.handleKeyPress = function (ev) {
+	var c = String.fromCharCode(ev.which);
+	if (CL.typingInTextbox) {
+		if (c == "\n") {
+			CL.saveTime();
+		}
+		return;
+	}
+	if (c == "\n") {
+		CL.clearCurrCat();
+		return;
+	}
+	if (CL.currCat != null) {
+		if (c == "\b") {
+			CL.currCat.text = CL.currCat.text.substring(0, CL.currCat.text.length - 1);
+		} else {
+			CL.currCat.text += c;
+		}
+		CL.updatePanel();
+		CL.currCat.draw();
+	}
+};
+
+
+CL.handleMouseOut = function () {
+	CL.scrollSpeed = 0;
+}
+
+CL.growCurrCat = function () {
+	if (CL.currCat !== null) {
+		if (CL.currCat.r < CL.MAXR) {
+			CL.currCat.r += 5;
+		}
+	}
+};
+
+CL.shrinkCurrCat = function () {
+	if (CL.currCat !== null) {
+		if (CL.currCat.r > CL.MINR) {
+			CL.currCat.r -= 5;
+		}
+	}
+};
+
+CL.clickAdd = function () {
+	CL.adding = true;
+	CL.clearCurrCat();
+};
+
+CL.clickTime = function () {
+	// allow user to edit time
+	CL.typingInTextbox = true;
+	$('#timetextbox').removeClass("hidden");
+	$('#timetextbox').val($('#duetime').text());
+	$('#timetextbox').focus();
+};
+
+CL.saveTime = function () {
+	var indate, origidate;
+	CL.typingInTextbox = false;
+	$('#timetextbox').addClass("hidden");
+	if (CL.currCat !== null) {
+		indate = Date.parse("Jan 1 " +$('#timetextbox').val() + ", 2013");
+		if (isNaN(indate)) {
+			return;
+		}
+		indate = new Date(indate);
+		origidate = CL.currCat.getDate();
+		origidate.setHours(indate.getHours());
+		origidate.setMinutes(indate.getMinutes());
+		origidate.setSeconds(indate.getSeconds());
+		CL.currCat.y = (CL.dateToY(origidate));
+	}
+};
+
+CL.init();
+
+$('#canvas').mousemove(CL.handleMouseMove);
+$('#canvas').mouseup(CL.handleMouseUp);
+$('#canvas').mousedown(CL.handleMouseDown);
+$('#canvas').mouseout(CL.handleMouseOut);
+$(document).keypress(CL.handleKeyPress);
+$('#timetextbox').focusout(CL.saveTime);
+$('#grow').click(CL.growCurrCat);
+$('#shrink').click(CL.shrinkCurrCat);
+$('#addnew').click(CL.clickAdd);
+$('#duetime').click(CL.clickTime);
+$('#savetime').click(CL.saveTime);
+});@
