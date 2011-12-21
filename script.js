@@ -313,14 +313,20 @@ $(document).ready(function () {
 	}
 	};
 
+	
+	
+	
 	CL.yToDate = function (y) {
 		return new Date((CL.NOW - y) * CL.scale + Date.now());	
 	};
 
 	CL.dateToY = function (d) {
+		if (!d.getTime) alert(d);
 		return (CL.NOW - (d.getTime() - Date.now())/CL.scale);
 	};
 
+	
+	
 	CL.dateToString = function (d) {
 		return (CL.days[d.getDay()] + " " + CL.months[d.getMonth()] + " " + d.getDate());
 	};
@@ -473,7 +479,7 @@ $(document).ready(function () {
 		CL.clearCurrCat();
 		CL.resetCalName();
 		CL.readCookie();
-		CL.linkInputAndDisplay($('#textinput'),$('text'));
+		CL.linkInputAndDisplay($('#textinput'),$('#text'));
 
 		//CL.autosave(); // TODO: make this work...
 		CL.update();
@@ -698,7 +704,7 @@ $(document).ready(function () {
 	};
 
 	CL.handleKeyPress = function (ev) {
-		var c = String.fromCharCode(ev.which);
+		/*var c = String.fromCharCode(ev.which);
 		if (CL.writable) {
 			if (CL.typingInTextbox) {
 				if (ev.which === 13) { // need to determine which textbox has focus
@@ -719,7 +725,9 @@ $(document).ready(function () {
 				CL.updatePanel();
 				CL.currCat.draw();
 			}
-		}
+		}*/
+		
+		
 	};
 
 
@@ -769,8 +777,21 @@ $(document).ready(function () {
 			CL.typingInTextbox = false;
 			input.addClass("hidden");
 		});
-	}
+		
+		// TODO: set position/css
+		input.css('position', 'absolute');
+		input.position({
+			my:'right top',
+			at:'right top',
+			of: display
+		});
+	};
 	
+	CL.updateText = function () {
+		if (CL.currCat !== null) {
+			
+		}
+	};
 	
 	CL.clickTime = function () {
 		// allow user to edit time
@@ -847,11 +868,7 @@ $(document).ready(function () {
 	
 	CL.clickSave = function () {
 		//alert("calnametextbox: " + $('#calnametextbox').val() + "; calname: " + CL.calname);
-		if ($('#calnametextbox').val() === CL.calname) {
 			CL.save();
-		} else {
-			CL.saveNew($('#calnametextbox').val());
-		}
 	};
 
 	
@@ -1044,6 +1061,7 @@ $(document).ready(function () {
 	$('#progress').click(CL.makeProgressOnCurr);
 	$('#repeatday').click(CL.toggleRepeatDay);
 	$('#repeatweek').click(CL.toggleRepeatWeek);
-	$('#loadbutton').click(CL.clickPopupLoad)
-	$('#createbutton').click(CL.clickPopupCreate)
+	$('#loadbutton').click(CL.clickPopupLoad);
+	$('#createbutton').click(CL.clickPopupCreate);
+	$('#textinput').keyup(CL.updateText);
 });

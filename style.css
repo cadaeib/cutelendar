@@ -14,7 +14,7 @@
 }
 
 #canvas {
-	position:absolute;
+	float:left;
 	top:50px;
 	left:20px;
 	width:300px;
@@ -44,7 +44,6 @@
 .textbutton:link { text-decoration:none;}
 
 #duetime {
-	position:absolute;
 	top:50px;
 	width: 100px;
 	height:25px;
@@ -54,7 +53,6 @@
 }
 
 #timetextbox {
-	position: absolute;
 	top:50px;
 	width:100px;
 	height:30px;
@@ -72,12 +70,10 @@
 }
 
 #rightpanel {
-	position:absolute;
-	left:500px;
-	top:30px;	
-	height:500px;
-	width:500px;
+	float:left;
 	background-color:#359;
+	padding:30px;
+	height:500px;
 }
 
 
@@ -90,33 +86,19 @@
 
 
 #youdid {
-	position:absolute;
-	right:50px;
-	top:10px;
-	
 }
+
 #beforedue {
-	position:absolute;
-	right:50px;
-	top:320px;
 }
 
 #youvegot {
-	position:absolute;
-	right:50px;
-	top:10px;
+	float:right;
 }
 
 #todothis {
-	position:absolute;
-	right:50px;
-	top:320px;
 }
 #timedisplay {
-	position: absolute;
 	width:60px;
-	top:70px;
-	right:70px;
 	background-color: #DDF;
 	font-size:40px;
 	font-family:"Agency FB";
@@ -125,17 +107,13 @@
 }
 
 #timelabels {
-	position: absolute;
 	width:50px;
-	top:70px;
-	right:20px;
 	font-size:20px;
 	font-family:"Agency FB";
 	text-align:left;	
 }
 
 .numberblock {
-	position:relative;
 	height:50px;
 	padding:15px;
 }
@@ -154,10 +132,6 @@
 
 #text {
 	text-align: center;
-//	height: 500px;
-//	top: 100px;
-//	left: 100px;
-//	margin: 0 auto;
 	font-weight: bold;
 	width: 300px;
 	padding-left:100px;
@@ -177,9 +151,6 @@
 }
 
 #buttonlist {
-	position:absolute;
-	top: 300px;
-	left: 200px;
 }
 
 .button {
@@ -201,7 +172,6 @@
 
 #colors {
 	height:20px;
-	position:absolute;
 	top: 100px;
 	left: 50px;
 }
@@ -234,7 +204,6 @@
 }
 
 #calnametextbox {
-	position:absolute;
 	left:20px;
 	top:35px;
 	background-color:#999;
@@ -243,7 +212,6 @@
 }
 
 #calname {
-	position:absolute;
 	left:20px;
 	top:35px;
 	height:18px;
@@ -255,8 +223,8 @@
 }
 
 #savepanel {
+	clear:both;
 	font-family:sans-serif;
-	position:absolute;
 	bottom:20px;
 	height:100px;
 	width:300px;
@@ -278,26 +246,19 @@
 }
 
 #repeatday {
-	position:absolute;
-	top:0px;
-	left:0px;
 }
 
 #repeatweek {
-	position:absolute;
-	top:0px;
-	left:30px;
 }
 
 .repeatbutton {
-	position:absolute;
-	top:0px;
-	left:0px;
+}
+
+#countdown {
+	float:right;
 }
 
 #awesome {
-	top:150px;
-	left:30px;
 	font-family: 'Agency FB';
 	font-size: 30px;
 	color:#FFF;
@@ -316,9 +277,6 @@ text-shadow:#FF9 0px 0px 8px;
 }
 
 #yourockwoohoo {
-	position:absolute;
-	top:150px;
-	left:30px;
 	font-family: 'Agency FB';
 	color:#FFF;
 	font-weight:bold;
